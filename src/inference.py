@@ -6,7 +6,7 @@ from model import DeepPunctuation, DeepPunctuationCRF
 from config import *
 
 parser = argparse.ArgumentParser(description='Punctuation restoration inference on text file')
-parser.add_argument('--cuda', default=True, type=lambda x: (str(x).lower() == 'true'), help='use cuda if available')
+parser.add_argument('--cuda', default=False, type=lambda x: (str(x).lower() == 'true'), help='use cuda if available')
 parser.add_argument('--pretrained-model', default='xlm-roberta-large', type=str, help='pretrained language model')
 parser.add_argument('--lstm-dim', default=-1, type=int,
                     help='hidden dimension in LSTM layer, if -1 is set equal to hidden dimension in language model')
@@ -38,7 +38,7 @@ deep_punctuation.to(device)
 
 
 def inference():
-    deep_punctuation.load_state_dict(torch.load(model_save_path), strict=False)
+    deep_punctuation.load_state_dict(torch.load(model_save_path, map_location=torch.device('cpu')), strict=False)
     deep_punctuation.eval()
 
     with open(args.in_file, 'r', encoding='utf-8') as f:
