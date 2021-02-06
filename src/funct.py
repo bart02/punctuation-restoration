@@ -70,7 +70,7 @@ def inference(model, text):
             t = True
         if result[i] in 'АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя' and t:
             t = False
-            result[i] = result[i].upper()
+            result = result[:i] + result[i].upper() + result[i+1:]
         
     return result
  
