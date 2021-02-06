@@ -38,7 +38,7 @@ deep_punctuation.to(device)
 
 
 def inference():
-    deep_punctuation.load_state_dict(torch.load(model_save_path))
+    deep_punctuation.load_state_dict(torch.load(model_save_path), strict=False)
     deep_punctuation.eval()
 
     with open(args.in_file, 'r', encoding='utf-8') as f:
@@ -79,7 +79,7 @@ def inference():
 
         x = torch.tensor(x)
         y_mask = torch.tensor(y_mask)
-        attn_mask = torch.tensor(attn_mask)
+        attn_mask = torch.tensor([attn_mask])
         x, attn_mask, y_mask = x.to(device), attn_mask.to(device), y_mask.to(device)
 
         with torch.no_grad():
