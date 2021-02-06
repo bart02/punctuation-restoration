@@ -63,5 +63,14 @@ def inference(model, text):
             if y_mask[i] == 1:
                 result += words_original_case[decode_idx] + punctuation_map[y_predict[i].item()] + ' '
                 decode_idx += 1
+    
+    t = False
+    for i in range(len(result)):
+        if result[i] == '.':
+            t = True
+        if result[i] in 'АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя' and t:
+            t = False
+            result[i] = result[i].upper()
+        
     return result
  
